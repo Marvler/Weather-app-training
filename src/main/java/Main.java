@@ -3,8 +3,9 @@ public class Main {
         LocationService locationService = new LocationService();
 //        UserInterface.legend();
 
-        System.out.println(locationService.getLocation());
+//        System.out.println(locationService.getLocation());
 
+        WriterToFile.writeLocationToFile(locationService.getLocation());
 
     }
 }
