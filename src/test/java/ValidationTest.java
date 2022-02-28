@@ -10,32 +10,32 @@ public class ValidationTest {
     @Test
     public void shouldCheckIfTheCoordinatesAreValid() {
         Validation validation = new Validation();
-        boolean result = validation.validateTheCoordinates("-52.21, 42.65");
+        String result = validation.validateTheCoordinates("-52.21, 42.65");
 
-        assertThat(result).isTrue();
+        assertThat(result).isEqualTo("-52.21, 42.65");
     }
 
     @Test
     void shouldCheckIfTheFieldCityIsNotEmpty() {
         Validation validation = new Validation();
-        boolean result = validation.validateIfCityNameIsEmpty("Krakow");
+        String result = validation.validateIfCityNameIsEmpty("Krakow");
 
-        assertThat(result).isFalse();
+        assertThat(result).isEqualTo("Krakow");
     }
 
     @Test
     @Disabled
     void shouldCheckIfTheFieldCityIsEmpty() {
         Validation validation = new Validation();
-        boolean result = validation.validateIfCityNameIsEmpty("");
+        String result = validation.validateIfCityNameIsEmpty("");
 
-        assertThat(result).isTrue();
+        assertThat(result).isNotEmpty();
     }
 
     @Test
     void shouldCheckIfTheFieldCityIsNotNull() {
         Validation validation = new Validation();
-        boolean result = validation.validateIfCityNameIsEmpty("Krakow");
+        String result = validation.validateIfCityNameIsEmpty("Krakow");
 
         assertThat(result).isNotNull();
     }
@@ -43,12 +43,13 @@ public class ValidationTest {
     @Test
     void shouldCheckIfTheFieldCountryNameIsNotEmpty() {
         Validation validation = new Validation();
-        boolean result = validation.validateIfCountryNameIsEmpty("Poland");
+        String result = validation.validateIfCountryNameIsEmpty("Poland");
 
-        assertThat(result).isFalse();
+        assertThat(result).isNotEmpty();
     }
 
     @Test
+    @Disabled
     void shouldCheckIfTheFieldCountryNameIsEmpty() {
         Validation validation = new Validation();
         String result = validation.validateIfCountryNameIsEmpty("");
