@@ -9,7 +9,7 @@ public class UserInterface {
     private static final String START_MENU_PATH = "src/main/resources/textMenuSchems/startMenu.txt";
     static Scanner scanner = new Scanner(System.in);
 
-    public static void startMenu() {
+    public static void legend() {
         try (Stream<String> stream = Files.lines(Paths.get(START_MENU_PATH))) {
             stream.forEach(System.out::println);
         } catch (IOException e) {
