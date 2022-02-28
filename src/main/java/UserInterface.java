@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 
 public class UserInterface {
 
-    private static final String START_MENU_PATH = "src/main/resources/textMenuSchems/startMenu.txt";
+    private static final String START_MENU_PATH = "src/main/resources/textMenuSchems/legend.txt";
     static Scanner scanner = new Scanner(System.in);
 
     public static void legend() {
@@ -31,4 +31,12 @@ public class UserInterface {
             }
         }
     }
+
+    protected static String getInformationMessage() {
+        System.out.println("Invalid data provided! Please type again!");
+        return Validation.validateIfCityNameIsEmpty(scanner.nextLine());
+
+    }
+
+
 }

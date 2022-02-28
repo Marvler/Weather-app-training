@@ -1,4 +1,5 @@
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,6 +24,7 @@ public class ValidationTest {
     }
 
     @Test
+    @Disabled
     void shouldCheckIfTheFieldCityIsEmpty() {
         Validation validation = new Validation();
         boolean result = validation.validateIfCityNameIsEmpty("");
@@ -49,17 +51,17 @@ public class ValidationTest {
     @Test
     void shouldCheckIfTheFieldCountryNameIsEmpty() {
         Validation validation = new Validation();
-        boolean result = validation.validateIfCountryNameIsEmpty("");
+        String result = validation.validateIfCountryNameIsEmpty("");
 
-        assertThat(result).isTrue();
+        assertThat(result).isEmpty();
     }
 
     @Test
     void shouldCheckIfTheFieldCountryNameIsNotNull() {
         Validation validation = new Validation();
-        boolean result = validation.validateIfCountryNameIsEmpty("Poland");
+        String result = validation.validateIfCountryNameIsEmpty("Poland");
 
-        assertThat(result).isNotNull();
+        assertThat(result).isEqualTo("Poland");
     }
 
 }
