@@ -13,6 +13,4 @@ public class Validation {
         return country == null || country.length() == 0;
     }
 
-
-
 }
