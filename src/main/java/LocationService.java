@@ -7,7 +7,7 @@ public class LocationService {
 
     private final static Scanner scanner = new Scanner(System.in);
 
-    public static Location getLocation() {
+    Location getLocation() {
 
         String longitudeAndLatitude = getLongitudeAndLatitude();
         String city = getCity();

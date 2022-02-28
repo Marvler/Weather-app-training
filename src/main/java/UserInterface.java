@@ -8,6 +8,7 @@ public class UserInterface {
 
     private static final String START_MENU_PATH = "src/main/resources/textMenuSchems/legend.txt";
     static Scanner scanner = new Scanner(System.in);
+    static Validation validation = new Validation();
 
     public static void legend() {
         try (Stream<String> stream = Files.lines(Paths.get(START_MENU_PATH))) {
@@ -34,9 +35,8 @@ public class UserInterface {
 
     protected static String getInformationMessage() {
         System.out.println("Invalid data provided! Please type again!");
-        return Validation.validateIfCityNameIsEmpty(scanner.nextLine());
+        return validation.validateIfCityNameIsEmpty(scanner.nextLine());
 
     }
-
 
 }
