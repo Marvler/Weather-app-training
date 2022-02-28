@@ -8,9 +8,6 @@ public class Location {
     private String region;
     private String countryName;
 
-    public Location() {
-    }
-
     public Location(UUID id, String longitudeAndLatitude, String city, String region, String countryName) {
         this.id = UUID.randomUUID();
         this.longitudeAndLatitude = longitudeAndLatitude;
