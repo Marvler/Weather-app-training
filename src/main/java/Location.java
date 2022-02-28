@@ -54,12 +54,6 @@ public class Location {
 
     @Override
     public String toString() {
-        return "Location{" +
-                "id=" + id +
-                ", longitudeAndLatitude='" + longitudeAndLatitude + '\'' +
-                ", city='" + city + '\'' +
-                ", region='" + region + '\'' +
-                ", countryName='" + countryName + '\'' +
-                '}';
+        return id + "," + longitudeAndLatitude + "," + city + "," + region + "," + countryName + "\n";
     }
 }
