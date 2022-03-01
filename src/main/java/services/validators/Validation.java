@@ -1,5 +1,7 @@
 package services.validators;
 
+import services.view.UserInterface;
+
 public class Validation {
 
 
@@ -16,8 +18,11 @@ public class Validation {
 
     }
 
-    public static boolean validateIfNotNullOrEmpty(String input){
-        return input.isEmpty() || input.isBlank();
+    public static String returnIfNotNullOrEmpty(String input){
+        if(input.isEmpty() || input.isBlank()){
+            input = UserInterface.getInformationMessage();
+        }
+        return input;
     }
 
 }

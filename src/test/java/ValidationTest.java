@@ -11,17 +11,17 @@ public class ValidationTest {
     @Test
     public void shouldCheckIfTheCoordinatesAreValid() {
         Validation validation = new Validation();
-        String result = validation.validateTheCoordinates("-52.21, 42.65");
+        boolean result = validation.validateTheCoordinates("-52.21, 42.65");
 
-        assertThat(result).isEqualTo("-52.21, 42.65");
+        assertThat(result).isTrue();
     }
 
     @Test
     void shouldCheckIfTheFieldCityIsNotEmpty() {
         Validation validation = new Validation();
-        String result = validation.validateIfCityNameIsEmpty("Krakow");
+        boolean result = validation.validateIfCityNameIsEmpty("Krakow");
 
-        assertThat(result).isEqualTo("Krakow");
+        assertThat(result).isTrue();
     }
     
     // Comment
@@ -30,15 +30,15 @@ public class ValidationTest {
     @Disabled
     void shouldCheckIfTheFieldCityIsEmpty() {
         Validation validation = new Validation();
-        String result = validation.validateIfCityNameIsEmpty("");
+        boolean result = validation.validateIfCityNameIsEmpty("");
 
-        assertThat(result).isNotEmpty();
+        assertThat(result).isFalse();
     }
 
     @Test
     void shouldCheckIfTheFieldCityIsNotNull() {
         Validation validation = new Validation();
-        String result = validation.validateIfCityNameIsEmpty("Krakow");
+        boolean result = validation.validateIfCityNameIsEmpty("Krakow");
 
         assertThat(result).isNotNull();
     }
@@ -46,18 +46,18 @@ public class ValidationTest {
     @Test
     void shouldCheckIfTheFieldCountryNameIsNotEmpty() {
         Validation validation = new Validation();
-        String result = validation.validateIfCountryNameIsEmpty("Poland");
+        boolean result = validation.validateIfCountryNameIsEmpty("Poland");
 
-        assertThat(result).isNotEmpty();
+        assertThat(result).isTrue();
     }
 
     @Test
     @Disabled
     void shouldCheckIfTheFieldCountryNameIsEmpty() {
         Validation validation = new Validation();
-        String result = validation.validateIfCountryNameIsEmpty("");
+        boolean result = validation.validateIfCountryNameIsEmpty("");
 
-        assertThat(result).isEmpty();
+        assertThat(result).isFalse();
     }
 
     @Test

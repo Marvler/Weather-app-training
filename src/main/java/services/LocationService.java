@@ -2,6 +2,7 @@ package services;
 
 import model.Location;
 import services.validators.Validation;
+import services.view.UserInterface;
 
 import java.util.UUID;
 
@@ -9,7 +10,7 @@ public class LocationService {
 
     private final static Validation validation = new Validation();
 
-    Location getLocation() {
+    public Location getLocation() {
 
         String longitudeAndLatitude = getLongitudeAndLatitude();
         String city = getCity();

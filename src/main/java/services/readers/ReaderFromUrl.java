@@ -16,8 +16,7 @@ public class ReaderFromUrl {
 
     public static WeatherData getCurrentDataFromOpenWeatherMap(String cityName) throws IOException {
 
-
-        String sURL = "https://api.openweathermap.org/data/2.5/weather?q="+cityName+"&&units=metric&appid=2e17c40d72b22d8b8202de7c3e7c7358";
+        String sURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&&units=metric&appid=2e17c40d72b22d8b8202de7c3e7c7358";
 
         JsonObject rootobj = getJsonObject(sURL);
         double temp = rootobj.get("main").getAsJsonObject().get("temp").getAsDouble();
@@ -30,7 +29,8 @@ public class ReaderFromUrl {
     }
 
     public static WeatherData getCurrentDataFromWeatherStack(String cityName) throws IOException {
-        String sURL = "http://api.weatherstack.com/current?access_key=da728590cf8879e1c808773661cbfdb6&query="+cityName+"&units=m";
+        String sURL = "http://api.weatherstack.com/current?access_key=da728590cf8879e1c808773661cbfdb6&query=" + cityName + "&units=m";
+
         JsonObject rootobj = getJsonObject(sURL);
 
         double temp = rootobj.get("current").getAsJsonObject().get("temperature").getAsDouble();
@@ -39,15 +39,14 @@ public class ReaderFromUrl {
         String windDirection = rootobj.get("current").getAsJsonObject().get("wind_dir").getAsString();
         double windSpeed = rootobj.get("current").getAsJsonObject().get("wind_speed").getAsDouble();
 
-        return new WeatherData(cityName,temp,pressure,humidity,windDirection,windSpeed);
+        return new WeatherData(cityName, temp, pressure, humidity, windDirection, windSpeed);
     }
 
     private static JsonObject getJsonObject(String sURL) throws IOException {
         URLConnection request = getUrlConnection(sURL);
         JsonParser jp = new JsonParser();
         JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-        JsonObject rootobj = root.getAsJsonObject();
-        return rootobj;
+        return root.getAsJsonObject();
     }
 
     private static URLConnection getUrlConnection(String sURL) throws IOException {
