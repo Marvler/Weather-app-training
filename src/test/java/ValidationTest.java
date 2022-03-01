@@ -1,6 +1,7 @@
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import services.validators.Validation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -60,9 +61,9 @@ public class ValidationTest {
     @Test
     void shouldCheckIfTheFieldCountryNameIsNotNull() {
         Validation validation = new Validation();
-        String result = validation.validateIfCountryNameIsEmpty("Poland");
+        boolean result = validation.validateIfCountryNameIsEmpty("Poland");
 
-        assertThat(result).isEqualTo("Poland");
+        assertThat(result).isTrue();
     }
 
 }
