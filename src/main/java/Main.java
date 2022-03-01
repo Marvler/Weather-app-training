@@ -5,7 +5,14 @@ public class Main {
 
 //        System.out.println(locationService.getLocation());
 
-        WriterToFile.writeLocationToFile(locationService.getLocation());
+//        WriterToFile.writeLocationToFile(locationService.getLocation());
+
+//        ReaderFromFile.readFromFile();
+
+        for (String allCity : ReaderFromFile.getAllCities()) {
+            System.out.println(allCity);
+        }
+
 
     }
 }
