@@ -1,13 +1,15 @@
-import java.util.Scanner;
+package services;
+
+import model.Location;
+import services.validators.Validation;
+
 import java.util.UUID;
 
 public class LocationService {
 
     private final static Validation validation = new Validation();
 
-    private final static Scanner scanner = new Scanner(System.in);
-
-    static Location getLocation() {
+    Location getLocation() {
 
         String longitudeAndLatitude = getLongitudeAndLatitude();
         String city = getCity();
@@ -20,22 +22,35 @@ public class LocationService {
 
     private static String getLongitudeAndLatitude() {
         System.out.println("Enter coordinates in format: [longitude, latitude]");
-        return validation.validateTheCoordinates(scanner.nextLine());
+        String result = UserInterface.getMessage();
+        while (validation.validateTheCoordinates(result)) {
+            result = UserInterface.getInformationMessage();
+        }
+        return result;
     }
 
     private static String getCity() {
         System.out.println("Enter city name");
-        return validation.validateIfCityNameIsEmpty(scanner.nextLine());
+        String result = UserInterface.getMessage();
+        while (validation.validateIfCityNameIsEmpty(result)) {
+            result = UserInterface.getInformationMessage();
+        }
+        return result;
     }
 
     private static String getRegion() {
         System.out.println("Enter region (optional)");
-        return scanner.nextLine();
+        return UserInterface.getMessage();
     }
 
     private static String getCountryName() {
         System.out.println("Enter country");
-        return validation.validateIfCountryNameIsEmpty(scanner.nextLine());
+        String result = UserInterface.getMessage();
+        while (validation.validateIfCountryNameIsEmpty(result)) {
+            result = UserInterface.getInformationMessage();
+        }
+        return result;
+
     }
 
 

@@ -1,3 +1,5 @@
+package model;
+
 public class WeatherData {
 
     private final String cityName;
@@ -16,13 +18,39 @@ public class WeatherData {
         this.windSpeed = windSpeed;
     }
 
+    public String getCityName() {
+        return cityName;
+    }
+
+    public double getTemperature() {
+        return temperature;
+    }
+
+    public long getPressure() {
+        return pressure;
+    }
+
+    public long getHumidity() {
+        return humidity;
+    }
+
+    public String getWindDirection() {
+        return windDirection;
+    }
+
+    public double getWindSpeed() {
+        return windSpeed;
+    }
+
     @Override
     public String toString() {
         return "Weather Data for city: " + cityName + "\n" +
-                "temperature=" + temperature + "\n"+
-                "pressure=" + pressure + "\n"+
-                "humidity=" + humidity + "\n"+
-                "windDirection=" + windDirection + "\n"+
-                "windSpeed=" + windSpeed;
+                "temperature= " + temperature + "\n"+
+                "pressure= " + pressure + "\n"+
+                "humidity= " + humidity + "\n"+
+                "windDirection= " + windDirection + "\n"+
+                "windSpeed= " +  windSpeed + "\n\n";
     }
+
+
 }

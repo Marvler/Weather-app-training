@@ -1,3 +1,5 @@
+package services;
+
 public class WindConverter {
 
     public static String convertWindDegToDirection(double directionInDegrees) {

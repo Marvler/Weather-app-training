@@ -1,6 +1,10 @@
+package services.readers;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import model.WeatherData;
+import services.WindConverter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,9 +26,7 @@ public class ReaderFromUrl {
         long windDirection = rootobj.get("wind").getAsJsonObject().get("deg").getAsLong();
         double windSpeed = rootobj.get("wind").getAsJsonObject().get("speed").getAsDouble();
 
-        return new WeatherData(cityName,temp,pressure,humidity,WindConverter.convertWindDegToDirection(windDirection),windSpeed);
-
-
+        return new WeatherData(cityName, temp, pressure, humidity, WindConverter.convertWindDegToDirection(windDirection), windSpeed);
     }
 
     public static WeatherData getCurrentDataFromWeatherStack(String cityName) throws IOException {
