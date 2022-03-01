@@ -11,13 +11,13 @@ public class UserInterface {
     static Validation validation = new Validation();
 
 
-
     public static void legend() {
         try (Stream<String> stream = Files.lines(Paths.get(START_MENU_PATH))) {
             stream.forEach(System.out::println);
         } catch (IOException e) {
             System.err.println("ERROR : Unable to read file");
         }
+        chooseOptionInStartMenuSwitch();
     }
 
     public static void chooseOptionInStartMenuSwitch() {
@@ -26,12 +26,19 @@ public class UserInterface {
 
         while (shouldContinue) {
             switch (userChoice) {
-//                case 1 -> Add specific locations to the file.
-//                case 2 -> Display currently added locations.
+                case 1 -> {
+                    WriterToFile.writeLocationToFile(LocationService.getLocation());
+                    legend();
+                }
+                case 2 -> {
+                    ReaderFromFile.readFromFile();
+                    legend();
 //                case 3 -> Download weather values.
+                }
                 case 4 -> shouldContinue = false;
                 default -> System.out.println("Choose option 1-4");
             }
+            break;
         }
     }
 
