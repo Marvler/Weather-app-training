@@ -23,6 +23,8 @@ public class ValidationTest {
 
         assertThat(result).isEqualTo("Krakow");
     }
+    
+    // Comment
 
     @Test
     @Disabled
