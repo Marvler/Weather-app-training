@@ -65,6 +65,22 @@ public class UserInterface {
     public static String getMessage() {
         return Validation.returnIfNotNullOrEmpty(scanner.next());
     }
+    public static String getCoordinatesInformation() {
+        System.out.println("Enter coordinates in format: [longitude, latitude]");
+        return UserInterface.getMessage();
+    }
+    public static String getCityData() {
+        System.out.println("Enter city name");
+        return UserInterface.getMessage();
+    }
+    public static String getRegionData() {
+        System.out.println("Enter region ");
+        return UserInterface.getMessage();
+    }
+    public static String getCountryData() {
+        System.out.println("Enter country");
+        return UserInterface.getMessage();
+    }
 
 
 }
