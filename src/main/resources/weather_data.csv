@@ -1,49 +1,15 @@
-Weather Data for city: Tarnow
-temperature= 3.12
-pressure= 1032
-humidity= 43
-windDirection= NNE
-windSpeed= 8.315
-
-Weather Data for city: Warsaw
-temperature= 4.91
-pressure= 1031
-humidity= 36
-windDirection= NNE
-windSpeed= 9.56
-
-Weather Data for city: Warszawa
-temperature= 4.91
-pressure= 1031
-humidity= 36
-windDirection= NNE
-windSpeed= 9.56
-
-Weather Data for city: Poznan
-temperature= 5.890000000000001
-pressure= 1033
-humidity= 48
-windDirection= S
-windSpeed= 8.3
 
 Weather Data for city: Tarnow
-temperature= 3.135
+temperature= 2.88
 pressure= 1032
-humidity= 42
+humidity= 41
 windDirection= NNE
 windSpeed= 8.26
 
 Weather Data for city: Warsaw
-temperature= 5.0
+temperature= 5.029999999999999
 pressure= 1030
 humidity= 37
-windDirection= NNE
-windSpeed= 8.3
-
-Weather Data for city: Warszawa
-temperature= 4.9350000000000005
-pressure= 1030
-humidity= 38
 windDirection= NNE
 windSpeed= 8.3
 
