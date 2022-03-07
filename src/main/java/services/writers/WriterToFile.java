@@ -10,13 +10,13 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 public class WriterToFile {
-    private String LOCATION_FILE;
+    private final String LOCATION_FILE;
 
     public WriterToFile(String mainLocation, String fileName) {
-        LOCATION_FILE = "src/" + mainLocation +"/resources/" + fileName;
+        LOCATION_FILE = "src/" + mainLocation + "/resources/" + fileName;
     }
 
-     public void writeLocationToFile(Location location) {
+    public void writeLocationToFile(Location location) {
         Path path = Paths.get(LOCATION_FILE);
         try {
             Files.write(path, location.toString().getBytes(), StandardOpenOption.APPEND);
