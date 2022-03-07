@@ -46,7 +46,7 @@ public class UserInterface {
                 }
                 case 3 -> {
                     WriterAvgDataToFile writerAvgDataToFile = new WriterAvgDataToFile();
-                    writerAvgDataToFile.writeAvarageDataToFile();
+                    writerAvgDataToFile.writeAverageDataToFile();
                     ReaderFromFile.readFromFile("main", "weather_data.csv");
                 }
 

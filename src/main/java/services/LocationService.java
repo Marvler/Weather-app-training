@@ -7,7 +7,6 @@ import services.view.UserInterface;
 import java.util.UUID;
 
 
-
 public class LocationService {
 
     private final static Validation validation = new Validation();
@@ -20,12 +19,11 @@ public class LocationService {
         String countryName = countryService();
 
         return new Location(UUID.randomUUID(), longitudeAndLatitude, city, region, countryName);
-
     }
 
     private static String coordinatesService() {
         String result = UserInterface.getCoordinatesInformation();
-        while (validation.validateTheCoordinates(result)) {
+        while (!validation.validateTheCoordinates(result)) {
             result = UserInterface.getInformationMessage();
         }
         return result;
@@ -45,7 +43,6 @@ public class LocationService {
             result = UserInterface.getInformationMessage();
         }
         return result;
-
     }
 
 
