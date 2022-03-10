@@ -1,3 +1,4 @@
+import services.readers.ReaderFromUrl;
 import services.view.UserInterface;
 
 import java.io.IOException;
@@ -5,7 +6,9 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        UserInterface.legend();
+//        UserInterface.legend();
+        ReaderFromUrl.getCurrentDataFromWeatherBit("Warsaw");
+
 
     }
 }

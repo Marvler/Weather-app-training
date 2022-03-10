@@ -42,6 +42,22 @@ public class ReaderFromUrl {
         return new WeatherData(cityName, temp, pressure, humidity, windDirection, windSpeed);
     }
 
+    public static void getCurrentDataFromWeatherBit(String cityName) throws IOException {
+        String sUrl = "https://api.weatherbit.io/v2.0/current?city=" + cityName + "&key=93a6237e0a694078804da69e2b755fc5";
+        JsonObject rootobj = getJsonObject(sUrl);
+
+        double temp = rootobj.get("data").getAsJsonArray().get(0).getAsJsonObject().get("temp").getAsDouble();
+        long humidity = rootobj.get("data").getAsJsonArray().get(0).getAsJsonObject().get("rh").getAsLong();
+        long pressure = rootobj.get("data").getAsJsonArray().get(0).getAsJsonObject().get("pres").getAsLong();
+        String windDirection = rootobj.get("data").getAsJsonArray().get(0).getAsJsonObject().get("wind_cdir").getAsString();
+        double windSpeed = rootobj.get("data").getAsJsonArray().get(0).getAsJsonObject().get("wind_spd").getAsDouble();
+
+        WeatherData weatherData = new WeatherData(cityName,temp,pressure,humidity,windDirection,windSpeed);
+
+        System.out.println(weatherData);
+    }
+
+
     private static JsonObject getJsonObject(String sURL) throws IOException {
         URLConnection request = getUrlConnection(sURL);
         JsonParser jp = new JsonParser();
