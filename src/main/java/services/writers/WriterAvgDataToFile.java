@@ -15,14 +15,20 @@ public class WriterAvgDataToFile {
         for (String city : cities
         ) {
             WeatherData dataFromOpenWeather = ReaderFromUrl.getCurrentDataFromOpenWeatherMap(city);
+            System.out.println(dataFromOpenWeather);
             WeatherData dataFromWeatherStack = ReaderFromUrl.getCurrentDataFromWeatherStack(city);
+            System.out.println(dataFromWeatherStack);
+            WeatherData dataFromWeatherBit = ReaderFromUrl.getCurrentDataFromWeatherBit(city);
+            System.out.println(dataFromWeatherBit);
 
+
+            int NUMBER_OF_WEATHER_SITES = 3;
             writerToFile.writeLocationToFile(new WeatherData(city,
-                    ((dataFromOpenWeather.getTemperature() + dataFromWeatherStack.getTemperature()) / 2),
-                    ((dataFromOpenWeather.getPressure() + dataFromWeatherStack.getPressure()) / 2),
-                    ((dataFromOpenWeather.getHumidity() + dataFromWeatherStack.getHumidity()) / 2),
+                    ((dataFromOpenWeather.getTemperature() + dataFromWeatherStack.getTemperature() + dataFromWeatherBit.getTemperature()) / NUMBER_OF_WEATHER_SITES),
+                    ((dataFromOpenWeather.getPressure() + dataFromWeatherStack.getPressure() + dataFromWeatherBit.getPressure()) / NUMBER_OF_WEATHER_SITES),
+                    ((dataFromOpenWeather.getHumidity() + dataFromWeatherStack.getHumidity() + dataFromWeatherBit.getHumidity()) / NUMBER_OF_WEATHER_SITES),
                     dataFromOpenWeather.getWindDirection(),
-                    ((dataFromOpenWeather.getWindSpeed() + dataFromWeatherStack.getWindSpeed()) / 2)));
+                    ((dataFromOpenWeather.getWindSpeed() + dataFromWeatherStack.getWindSpeed()) + dataFromWeatherBit.getWindSpeed() / NUMBER_OF_WEATHER_SITES)));
         }
     }
 }
