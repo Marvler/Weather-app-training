@@ -13,4 +13,11 @@ class WindConverterTest {
         assertThat(result).isEqualTo("SSE");
     }
 
+    @Test
+    void shouldCheckIfTheConversionIsNotValid() {
+        String result = WindConverter.convertWindDegToDirection(850.75);
+
+        assertThat(result).isEqualTo("?");
+    }
+
 }
