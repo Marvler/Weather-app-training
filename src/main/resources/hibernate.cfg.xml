@@ -13,7 +13,7 @@
         </property>
 
         <property name="hibernate.connection.url">
-            jdbc:postgresql://localhost:5432/weatherAppData
+            jdbc:postgresql://localhost:5432/weatherAppDB
         </property>
 
         <property name="hibernate.connection.username">
@@ -21,7 +21,7 @@
         </property>
 
         <property name="hibernate.connection.password">
-            @postGre
+            admin
         </property>
 
 
@@ -33,6 +33,9 @@
         <property name="connection.pool_size">1</property>
 
         <property name="current_session_context_class">thread</property>
+
+        <mapping class="model.Location"/>
+        <mapping class="model.WeatherData"/>
 
     </session-factory>
 </hibernate-configuration>

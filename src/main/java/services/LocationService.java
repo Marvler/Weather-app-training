@@ -18,7 +18,7 @@ public class LocationService {
         String region = UserInterface.getRegionData();
         String countryName = countryService();
 
-        return new Location(UUID.randomUUID(), longitudeAndLatitude, city, region, countryName);
+        return new Location(longitudeAndLatitude, city, region, countryName);
     }
 
     private static String coordinatesService() {
