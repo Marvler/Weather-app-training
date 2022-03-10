@@ -13,7 +13,6 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 @Table(name = "weather_data")
 @Entity
 @NoArgsConstructor
@@ -43,6 +42,7 @@ public class WeatherData {
     private Location location;
 
     public WeatherData(String cityName, double temperature, long pressure, long humidity, String windDirection, double windSpeed) {
+        this.id = UUID.randomUUID();
         this.cityName = cityName;
         this.temperature = temperature;
         this.pressure = pressure;

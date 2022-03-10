@@ -1,18 +1,34 @@
 package model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 import java.util.UUID;
 
 @Data
+@Entity
+@NoArgsConstructor
+@Table(name = "location")
 public class Location {
 
-    private final UUID id;
+    @Id
+    @Column(name = "uuid_id")
+    private UUID id;
+
+    @Column(name = "long_lat")
     private String longitudeAndLatitude;
+
+    @Column(name = "city")
     private String city;
+
+    @Column(name = "region")
     private String region;
+
+    @Column(name = "country_name")
     private String countryName;
 
-    public Location(UUID id, String longitudeAndLatitude, String city, String region, String countryName) {
+    public Location(String longitudeAndLatitude, String city, String region, String countryName) {
         this.id = UUID.randomUUID();
         this.longitudeAndLatitude = longitudeAndLatitude;
         this.city = city;
