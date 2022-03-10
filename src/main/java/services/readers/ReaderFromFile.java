@@ -5,10 +5,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ReaderFromFile {
     private static final String SEPARATOR = ",";
+    private static final int CITY_INDEX_FROM_LINE = 3;
 
     public static void readFromFile(String location, String fileName) {
         String LOCATION_FILE = "src/" + location + "/resources/" + fileName;
@@ -21,18 +24,20 @@ public class ReaderFromFile {
 
     public static HashSet<String> getAllCities(String location, String fileName) {
         String LOCATION_FILE = "src/" + location + "/resources/" + fileName;
-        List<String> cityLines = null;
+        List<String> lines = null;
         try {
-            cityLines = Files.readAllLines(Paths.get(LOCATION_FILE));
+            lines = Files.readAllLines(Paths.get(LOCATION_FILE));
         } catch (IOException e) {
             System.err.println("ERROR: Unable to read the file.");
         }
-        HashSet<String> cities = new HashSet<>();
-        for (String line : cityLines) {
-            String[] city = line.split(SEPARATOR);
-            cities.add(city[3]);
-        }
-        return cities;
+
+        assert lines != null;
+        Set<String> cities = lines.stream()
+                .map(line -> line.split(SEPARATOR))
+                .map(array -> array[CITY_INDEX_FROM_LINE])
+                .collect(Collectors.toSet());
+
+        return (HashSet<String>) cities;
     }
 
 }

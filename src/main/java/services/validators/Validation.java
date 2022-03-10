@@ -1,10 +1,11 @@
 package services.validators;
 
+import services.view.UserInterface;
+
 public class Validation {
 
-
     public boolean validateTheCoordinates(String coordinates) {
-        return (!coordinates.matches("^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?)(N|S)?,\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)(E|W)?$"));
+        return (coordinates.matches("^([1-8]?[0-9]|90)(N|S),\\s*(180|(1[0-7][0-9])|[1-9][0-9]|[0-9])(E|W)$"));
     }
 
     public boolean validateIfCityNameIsEmpty(String city) {
@@ -16,8 +17,11 @@ public class Validation {
 
     }
 
-    public static boolean validateIfNotNullOrEmpty(String input){
-        return input.isEmpty() || input.isBlank();
+    public static String returnIfNotNullOrEmpty(String input) {
+        if (input.isEmpty() || input.isBlank()) {
+            input = UserInterface.getInformationMessage();
+        }
+        return input;
     }
 
 }

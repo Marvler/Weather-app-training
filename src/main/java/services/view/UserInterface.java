@@ -1,5 +1,6 @@
-package services;
+package services.view;
 
+import services.LocationService;
 import services.readers.ReaderFromFile;
 import services.validators.Validation;
 import services.writers.WriterAvgDataToFile;
@@ -45,7 +46,7 @@ public class UserInterface {
                 }
                 case 3 -> {
                     WriterAvgDataToFile writerAvgDataToFile = new WriterAvgDataToFile();
-                    writerAvgDataToFile.writeAvarageDataToFile();
+                    writerAvgDataToFile.writeAverageDataToFile();
                     ReaderFromFile.readFromFile("main", "weather_data.csv");
                 }
 
@@ -56,13 +57,29 @@ public class UserInterface {
         }
     }
 
-    protected static String getInformationMessage() {
+    public static String getInformationMessage() {
         System.out.println("Invalid data provided! Please type again!");
-        return scanner.next();
+        return Validation.returnIfNotNullOrEmpty(scanner.next());
     }
 
-    protected static String getMessage() {
-        return scanner.next();
+    public static String getMessage() {
+        return Validation.returnIfNotNullOrEmpty(scanner.next());
+    }
+    public static String getCoordinatesInformation() {
+        System.out.println("Enter coordinates in format: [longitude, latitude]");
+        return UserInterface.getMessage();
+    }
+    public static String getCityData() {
+        System.out.println("Enter city name");
+        return UserInterface.getMessage();
+    }
+    public static String getRegionData() {
+        System.out.println("Enter region ");
+        return UserInterface.getMessage();
+    }
+    public static String getCountryData() {
+        System.out.println("Enter country");
+        return UserInterface.getMessage();
     }
 
 

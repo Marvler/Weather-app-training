@@ -3,7 +3,7 @@ package services;
 public class WindConverter {
 
     public static String convertWindDegToDirection(double directionInDegrees) {
-        if (directionInDegrees > 348.75 || directionInDegrees <= 11.25) {
+        if ((directionInDegrees > 348.75 && directionInDegrees <= 360) || (directionInDegrees <= 11.25 && directionInDegrees >= 0)) {
             return "N";
         } else if (directionInDegrees > 11.25 && directionInDegrees <= 33.25) {
             return "NNE";
@@ -33,7 +33,7 @@ public class WindConverter {
             return "WNW";
         } else if ((directionInDegrees >= 303.75) && (directionInDegrees <= 326.25)) {
             return "NW";
-        } else if (directionInDegrees >= 326.25) {
+        } else if (directionInDegrees >= 326.25 && directionInDegrees <= 348.75) {
             return "NNW";
         } else {
             return "?";

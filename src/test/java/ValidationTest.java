@@ -1,5 +1,5 @@
 
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import services.validators.Validation;
 
@@ -7,63 +7,81 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ValidationTest {
 
+    private Validation validation;
+
+    @BeforeEach
+    void createValidation() {
+        validation = new Validation();
+    }
 
     @Test
     public void shouldCheckIfTheCoordinatesAreValid() {
-        Validation validation = new Validation();
-        String result = validation.validateTheCoordinates("-52.21, 42.65");
+        boolean result = validation.validateTheCoordinates("52N, 21E");
 
-        assertThat(result).isEqualTo("-52.21, 42.65");
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    public void shouldCheckIfTheCoordinatesAreNotValid() {
+        boolean result = validation.validateTheCoordinates("52N21E");
+
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    public void shouldCheckIfTheCoordinatesAreNotValidWithoutDirection() {
+        boolean result = validation.validateTheCoordinates("52, 21");
+
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    public void shouldCheckIfTheCoordinatesAreOutOfRange() {
+        boolean result = validation.validateTheCoordinates("520N, 210E");
+
+        assertThat(result).isFalse();
     }
 
     @Test
     void shouldCheckIfTheFieldCityIsNotEmpty() {
-        Validation validation = new Validation();
-        String result = validation.validateIfCityNameIsEmpty("Krakow");
+        boolean result = validation.validateIfCityNameIsEmpty("Krakow");
 
-        assertThat(result).isEqualTo("Krakow");
+        assertThat(result).isFalse();
     }
 
     @Test
-    @Disabled
     void shouldCheckIfTheFieldCityIsEmpty() {
-        Validation validation = new Validation();
-        String result = validation.validateIfCityNameIsEmpty("");
+        boolean result = validation.validateIfCityNameIsEmpty("");
 
-        assertThat(result).isNotEmpty();
+        assertThat(result).isTrue();
     }
 
     @Test
     void shouldCheckIfTheFieldCityIsNotNull() {
-        Validation validation = new Validation();
-        String result = validation.validateIfCityNameIsEmpty("Krakow");
+        boolean result = validation.validateIfCityNameIsEmpty("Krakow");
 
         assertThat(result).isNotNull();
     }
 
     @Test
     void shouldCheckIfTheFieldCountryNameIsNotEmpty() {
-        Validation validation = new Validation();
-        String result = validation.validateIfCountryNameIsEmpty("Poland");
+        boolean result = validation.validateIfCountryNameIsEmpty("Poland");
 
-        assertThat(result).isNotEmpty();
+        assertThat(result).isFalse();
     }
 
     @Test
-    @Disabled
     void shouldCheckIfTheFieldCountryNameIsEmpty() {
-        Validation validation = new Validation();
-        String result = validation.validateIfCountryNameIsEmpty("");
+        boolean result = validation.validateIfCountryNameIsEmpty("");
 
-        assertThat(result).isEmpty();
+        assertThat(result).isTrue();
     }
 
     @Test
     void shouldCheckIfTheFieldCountryNameIsNotNull() {
-        Validation validation = new Validation();
         boolean result = validation.validateIfCountryNameIsEmpty("Poland");
 
-        assertThat(result).isTrue();
+        assertThat(result).isNotNull();
     }
 
 }

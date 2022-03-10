@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class Location {
 
-    private UUID id;
+    private final UUID id;
     private String longitudeAndLatitude;
     private String city;
     private String region;
