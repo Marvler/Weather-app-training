@@ -1,21 +1,17 @@
 package model;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import org.hibernate.Hibernate;
+//import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.UUID;
 
-@Getter
-@Setter
-@Table(name = "weather_data")
+@Data
 @Entity
 @NoArgsConstructor
+@Table(name = "weather_data")
 public class WeatherData {
 
     @Id
@@ -33,7 +29,6 @@ public class WeatherData {
     private String windDirection;
     @Column(name = "wind_speed")
     private double windSpeed;
-
     @Column(name = "date")
     private LocalDate date;
 
@@ -49,6 +44,7 @@ public class WeatherData {
         this.humidity = humidity;
         this.windDirection = windDirection;
         this.windSpeed = windSpeed;
+        this.date = LocalDate.now();
     }
 
     @Override
@@ -61,13 +57,13 @@ public class WeatherData {
                 "windSpeed= " +  windSpeed + "\n\n";
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        WeatherData that = (WeatherData) o;
-        return id != null && Objects.equals(id, that.id);
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+//        WeatherData that = (WeatherData) o;
+//        return id != null && Objects.equals(id, that.id);
+//    }
 
     @Override
     public int hashCode() {
