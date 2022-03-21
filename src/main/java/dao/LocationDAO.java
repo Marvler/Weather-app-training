@@ -13,17 +13,21 @@ import java.util.List;
 
 public class LocationDAO {
 
-    private static final Logger logger = LogManager.getLogger(LocationDAO.class);
+    private final Logger logger = LogManager.getLogger(LocationDAO.class);
 
     public void save(Location location) {
 
         Transaction transaction = null;
-
+        Location foundLocation = findByCity(location.getCity());
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
             transaction = session.beginTransaction();
 
-            session.save(location);
+
+            if (foundLocation != null) {
+                logger.info("City already in DB");
+            } else {
+                session.save(location);
+            }
 
             transaction.commit();
         } catch (HibernateException e) {
@@ -39,7 +43,9 @@ public class LocationDAO {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            Location location = session.createQuery("FROM Location WHERE city=:city", Location.class).setParameter("city", city).getSingleResult();
+            Location location = session.createQuery("FROM Location WHERE city=:city", Location.class).
+                    setParameter("city", city).
+                    getSingleResult();
             transaction.commit();
 
             return location;
@@ -111,8 +117,6 @@ public class LocationDAO {
 
         return Collections.emptyList();
     }
-
-
 
 
 }
