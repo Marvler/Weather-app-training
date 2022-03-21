@@ -49,6 +49,17 @@ public class WeatherData {
         this.date = LocalDate.now();
     }
 
+    public WeatherData(String cityName, double temperature, long pressure, long humidity, String windDirection, double windSpeed, LocalDate localDate) {
+        this.id = UUID.randomUUID();
+        this.cityName = cityName;
+        this.temperature = temperature;
+        this.pressure = pressure;
+        this.humidity = humidity;
+        this.windDirection = windDirection;
+        this.windSpeed = windSpeed;
+        this.date = localDate;
+    }
+
     @Override
     public String toString() {
         return "Weather Data for city: " + cityName + "\n" +
