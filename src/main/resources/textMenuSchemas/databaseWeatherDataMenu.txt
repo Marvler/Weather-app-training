@@ -1,0 +1,10 @@
+======================================================================
+           CONSOLE WEATHER APPLICATION - DB WEATHER DATA MENU
+======================================================================
+1. Display weather data for city.
+2. Display weather data for date.
+3. Delete data by city.
+4. Delete data by date.
+5. Delete data by city and date.
+6. Return.
+7. Exit.

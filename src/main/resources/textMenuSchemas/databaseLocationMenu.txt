@@ -1,0 +1,10 @@
+======================================================================
+           CONSOLE WEATHER APPLICATION - DB LOCATION MENU
+======================================================================
+1. Add Location to DB.
+2. Remove Location from DB.
+3. Update Location info.
+4. Find All locations.
+5. Find location by city.
+6. Return.
+7. Exit.

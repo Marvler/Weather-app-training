@@ -2,6 +2,7 @@ package model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 //import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -32,6 +33,7 @@ public class WeatherData {
     @Column(name = "date")
     private LocalDate date;
 
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
     @ManyToOne
     @JoinColumn(name = "location_id")
     private Location location;
