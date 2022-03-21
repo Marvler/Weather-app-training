@@ -1,0 +1,7 @@
+======================================================================
+           CONSOLE WEATHER APPLICATION - DB START MENU
+======================================================================
+1. Location menu.
+2. Weather Data menu.
+3. Return to start menu.
+4. Exit

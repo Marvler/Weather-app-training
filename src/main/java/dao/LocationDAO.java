@@ -8,12 +8,14 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.NoResultException;
 import java.util.Collections;
 import java.util.List;
 
 public class LocationDAO {
 
     private final Logger logger = LogManager.getLogger(LocationDAO.class);
+
 
     public void save(Location location) {
 
@@ -45,7 +47,7 @@ public class LocationDAO {
             transaction = session.beginTransaction();
             Location location = session.createQuery("FROM Location WHERE city=:city", Location.class).
                     setParameter("city", city).
-                    getSingleResult();
+                    uniqueResultOptional().orElse(null);
             transaction.commit();
 
             return location;
@@ -78,6 +80,26 @@ public class LocationDAO {
         }
     }
 
+    public void deleteByCity(String city) {
+        Transaction transaction = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            Location location = session.createQuery("FROM Location WHERE city=:city", Location.class).
+                    setParameter("city", city).
+                    getSingleResult();
+            session.delete(location);
+            transaction.commit();
+
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+
+                logger.error(e.getMessage(), e);
+            }
+        }
+    }
+
     public void update(Location location) {
         Transaction transaction = null;
 
@@ -96,18 +118,38 @@ public class LocationDAO {
         }
     }
 
+    public void updateByCity(String city) {
+        Transaction transaction = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            Location location = session.createQuery("FROM Location WHERE city=:city", Location.class).
+                    setParameter("city", city).
+                    getSingleResult();
+            session.update(location);
+            transaction.commit();
+
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+
+                logger.error(e.getMessage(), e);
+            }
+        }
+    }
+
     public List<Location> findAllLocations() {
         Transaction transaction = null;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
-            List<Location> movies = session.createQuery("SELECT n FROM Location AS n", Location.class)
+            List<Location> locations = session.createQuery("SELECT n FROM Location AS n", Location.class)
                     .getResultList();
 
             transaction.commit();
 
-            return movies;
+            return locations;
         } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();

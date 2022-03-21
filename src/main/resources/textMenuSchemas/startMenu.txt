@@ -1,8 +1,7 @@
 ======================================================================
-Welcome in our Weather Console App, please choose what You want to do:
+                      CONSOLE WEATHER APPLICATION
 ======================================================================
-1. Add specific locations to the file.
-2. Display currently added locations.
-3. Download weather values.
-4. Exit.
+1. Files operations Menu.
+2. Database operations Menu.
+3. Exit.
 ======================================================================
