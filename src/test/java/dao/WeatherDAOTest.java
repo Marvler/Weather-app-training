@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Log4j2
@@ -49,6 +50,15 @@ class WeatherDAOTest {
         Assertions.assertNotNull(weatherDataFromDB);
     }
 
+    @Test
+    public void shouldFindListOfRecordsByDate(){
+        for (int i = 0; i < 3; i++) {
+            weatherDAO.save(new WeatherData("XYZ", 123L, 1025L, 54L, "SE", 15.5, LocalDate.now()));
+        }
+        List <WeatherData>weatherData = weatherDAO.findByDate(LocalDate.now());
+        Assertions.assertEquals(weatherData.size(),3);
+        weatherDAO.deleteAllRecordsByCity("XYZ");
+    }
 
     @Test
     void shouldDeleteNewestRecordByCity() {
@@ -87,6 +97,15 @@ class WeatherDAOTest {
         }
         weatherDAO.deleteAllRecordsByCityAndDate("XYZ", LocalDate.now().minusDays(2));
         Assertions.assertNull(weatherDAO.findNewestRecordByCityAndDate("XYZ", LocalDate.now().minusDays(2)));
+    }
+
+    @Test
+    public void shouldDeleteAllRecordsByDate(){
+        for (int i = 0; i < 3; i++) {
+            weatherDAO.save(new WeatherData("XYZ", 123L, 1025L, 54L, "SE", 15.5, LocalDate.now().minusDays(10)));
+        }
+        weatherDAO.deleteAllRecordsByDate(LocalDate.now().minusDays(10));
+        Assertions.assertEquals(weatherDAO.findByDate(LocalDate.now().minusDays(10)).size(),0);
     }
 
 }
