@@ -55,6 +55,37 @@ public class WeatherDAO {
         deleteWeatherDataBasedOnQuery(city, localDate, 2);
     }
 
+    public void deleteAllRecordsByDate(LocalDate localDate) {
+        deleteWeatherDataBasedOnQuery("", localDate, 3);
+    }
+
+    private void deleteWeatherDataBasedOnQuery(String cityName, LocalDate localDate, int option) {
+        Transaction transaction = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            switch (option) {
+                case 1 -> session.createSQLQuery("DELETE FROM weather_data WHERE city_name=:city")
+                        .setParameter("city", cityName)
+                        .executeUpdate();
+                case 2 -> session.createSQLQuery("DELETE FROM weather_data WHERE city_name=:city AND date=:localDate")
+                        .setParameter("city", cityName)
+                        .setParameter("localDate", localDate)
+                        .executeUpdate();
+                case 3 -> session.createSQLQuery("DELETE FROM weather_data WHERE date=:localDate")
+                        .setParameter("localDate", localDate)
+                        .executeUpdate();
+            }
+            transaction.commit();
+
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
+
+            logger.error(e.getMessage(), e);
+        }
+    }
+
     private void deleteWeatherDataFromDB(WeatherData weatherData) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -73,12 +104,35 @@ public class WeatherDAO {
     }
 
     public WeatherData findNewestRecordByCity(String cityName) {
-        return getWeatherComepleteData(cityName,LocalDate.now(),1);
+        return getWeatherComepleteData(cityName, LocalDate.now(), 1);
     }
 
 
     public WeatherData findNewestRecordByCityAndDate(String cityName, LocalDate localDate) {
         return getWeatherComepleteData(cityName, localDate, 2);
+    }
+
+    public List<WeatherData> findByDate(LocalDate localDate) {
+        Transaction transaction = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            List<WeatherData> weatherData = session.createQuery("FROM WeatherData WHERE date=:localDate", WeatherData.class)
+                    .setParameter("localDate", localDate)
+                    .getResultList();
+            transaction.commit();
+
+            return weatherData;
+
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
+
+            logger.error(e.getMessage(), e);
+        }
+
+        return null;
+
     }
 
     public WeatherData findByID(UUID id) {
@@ -141,27 +195,5 @@ public class WeatherDAO {
         } else return null;
     }
 
-    private void deleteWeatherDataBasedOnQuery(String cityName, LocalDate localDate, int option) {
-        Transaction transaction = null;
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            switch (option) {
-                case 1 -> session.createSQLQuery("DELETE FROM weather_data WHERE city_name=:city")
-                        .setParameter("city", cityName)
-                        .executeUpdate();
-                case 2 -> session.createSQLQuery("DELETE FROM weather_data WHERE city_name=:city AND date=:localDate")
-                        .setParameter("city", cityName)
-                        .setParameter("localDate", localDate)
-                        .executeUpdate();
-            }
-            transaction.commit();
-
-        } catch (HibernateException e) {
-            if (transaction != null)
-                transaction.rollback();
-
-            logger.error(e.getMessage(), e);
-        }
-    }
 }
