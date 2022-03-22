@@ -1,7 +1,6 @@
-
+import dao.validators.Validation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import services.validators.Validation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -83,5 +82,21 @@ public class ValidationTest {
 
         assertThat(result).isNotNull();
     }
+
+    @Test
+    void shouldCheckIfCityExists() {
+        boolean result = validation.validateIfCityExists("Cracow");
+
+        assertThat(result).isTrue();
+
+    }
+
+    @Test
+    void shouldCheckIfDoesntCityExists() {
+        boolean result = validation.validateIfCityExists("XYZ");
+
+        assertThat(result).isFalse();
+    }
+
 
 }
