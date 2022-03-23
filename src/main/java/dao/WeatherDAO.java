@@ -117,9 +117,7 @@ public class WeatherDAO {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            List<WeatherData> weatherData = session.createQuery("FROM WeatherData WHERE date=:localDate", WeatherData.class)
-                    .setParameter("localDate", localDate)
-                    .getResultList();
+            List<WeatherData> weatherData = getWeatherDataListBasedOnQuery("",localDate, session, 1);
             transaction.commit();
 
             return weatherData;
@@ -133,6 +131,46 @@ public class WeatherDAO {
 
         return null;
 
+    }
+
+    public List<WeatherData> findByCity(String cityName) {
+        Transaction transaction = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            List<WeatherData> weatherData = getWeatherDataListBasedOnQuery(cityName,LocalDate.now(), session, 2);
+            transaction.commit();
+
+            return weatherData;
+
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
+
+            logger.error(e.getMessage(), e);
+        }
+
+        return null;
+
+    }
+
+    private List<WeatherData> getWeatherDataListBasedOnQuery(String cityName, LocalDate localDate, Session session, int option) {
+        List<WeatherData> weatherData;
+        switch (option){
+            case 1 -> {
+                weatherData = session.createQuery("FROM WeatherData WHERE date=:localDate", WeatherData.class)
+                    .setParameter("localDate", localDate)
+                    .getResultList();
+                return weatherData;
+            }
+            case 2 -> {
+                weatherData = session.createQuery("FROM WeatherData WHERE city_name=:cityName", WeatherData.class)
+                        .setParameter("cityName", cityName)
+                        .getResultList();
+                return weatherData;
+            }
+        }
+        return null;
     }
 
     public WeatherData findByID(UUID id) {
@@ -190,6 +228,7 @@ public class WeatherDAO {
                     .getResultList();
 
         }
+
         if (weatherData.size() > 0) {
             return weatherData.get(weatherData.size() - 1);
         } else return null;
