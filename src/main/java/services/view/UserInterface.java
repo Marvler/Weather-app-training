@@ -2,15 +2,16 @@ package services.view;
 
 import dao.LocationDAO;
 import dao.WeatherDAO;
+import dao.validators.Validation;
 import services.LocationService;
 import services.readers.ReaderFromFile;
-import services.validators.Validation;
 import services.writers.WriterAvgDataToFile;
 import services.writers.WriterToFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
@@ -58,6 +59,7 @@ public class UserInterface {
 
     public static void databaseWeatherDataMenu() throws IOException {
         readMenuFile(DB_WD_MENU_PATH);
+        databaseWeatherDataMenuSwitch();
     }
 
 
@@ -126,13 +128,28 @@ public class UserInterface {
 
         while (shouldContinue) {
             switch (userChoice) {
-                case 1 -> locationDAO.save(locServ.getLocation());
-                case 2 -> locationDAO.deleteByCity(getCityData());
-                case 3 -> locationDAO.updateByCity(getCityData());
-                case 4 -> System.out.println(locationDAO.findAllLocations());
-                case 5 -> System.out.println(locationDAO.findByCity(getCityData()));
+                case 1 -> {
+                    locationDAO.save(locServ.getLocation());
+                    databaseLocationMenu();
+                }
+                case 2 -> {
+                    locationDAO.deleteByCity(getCityData());
+                    databaseLocationMenu();
+                }
+                case 3 -> {
+                    locationDAO.updateByCity(getCityData());
+                    databaseLocationMenu();
+                }
+                case 4 -> {
+                    System.out.println(locationDAO.findAllLocations());
+                    databaseLocationMenu();
+                }
+                case 5 -> {
+                    System.out.println(locationDAO.findByCity(getCityData()));
+                    databaseLocationMenu();
+                }
                 case 6 -> databaseStartMenu();
-                case 7-> shouldContinue = false;
+                case 7 -> shouldContinue = false;
                 default -> System.out.println("Choose option 1-7");
             }
             break;
@@ -145,13 +162,28 @@ public class UserInterface {
 
         while (shouldContinue) {
             switch (userChoice) {
-                case 1 ->weatherDAO.findByCity(getCityData());
-                case 2 ->weatherDAO.findByDate(getDate());
-                case 3 ->weatherDAO.deleteAllRecordsByCity(getCityData());
-                case 4 ->weatherDAO.deleteAllRecordsByDate();
-                case 5 -> weatherDAO.deleteAllRecordsByCityAndDate(getCityData(),getDate());
+                case 1 -> {
+                    weatherDAO.findByCity(getCityData());
+                    databaseWeatherDataMenu();
+                }
+                case 2 -> {
+                    weatherDAO.findByDate(LocalDate.now());
+                    databaseWeatherDataMenu();
+                }
+                case 3 -> {
+                    weatherDAO.deleteAllRecordsByCity(getCityData());
+                    databaseWeatherDataMenu();
+                }
+                case 4 -> {
+                    weatherDAO.deleteAllRecordsByDate(LocalDate.now());
+                    databaseWeatherDataMenu();
+                }
+                case 5 -> {
+                    weatherDAO.deleteAllRecordsByCityAndDate(getCityData(), LocalDate.now());
+                    databaseWeatherDataMenu();
+                }
                 case 6 -> databaseStartMenu();
-                case 7-> shouldContinue = false;
+                case 7 -> shouldContinue = false;
                 default -> System.out.println("Choose option 1-7");
             }
             break;
@@ -186,6 +218,5 @@ public class UserInterface {
         System.out.println("Enter country");
         return UserInterface.getMessage();
     }
-
 
 }
