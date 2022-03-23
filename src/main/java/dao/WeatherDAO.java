@@ -65,14 +65,14 @@ public class WeatherDAO {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             switch (option) {
-                case 1 -> session.createSQLQuery("DELETE FROM weather_data WHERE city_name=:city")
+                case 1 -> session.createSQLQuery("DELETE FROM WeatherData WHERE cityName=:city")
                         .setParameter("city", cityName)
                         .executeUpdate();
-                case 2 -> session.createSQLQuery("DELETE FROM weather_data WHERE city_name=:city AND date=:localDate")
+                case 2 -> session.createSQLQuery("DELETE FROM WeatherData WHERE cityName=:city AND date=:localDate")
                         .setParameter("city", cityName)
                         .setParameter("localDate", localDate)
                         .executeUpdate();
-                case 3 -> session.createSQLQuery("DELETE FROM weather_data WHERE date=:localDate")
+                case 3 -> session.createSQLQuery("DELETE FROM WeatherData WHERE date=:localDate")
                         .setParameter("localDate", localDate)
                         .executeUpdate();
             }
@@ -104,12 +104,12 @@ public class WeatherDAO {
     }
 
     public WeatherData findNewestRecordByCity(String cityName) {
-        return getWeatherComepleteData(cityName, LocalDate.now(), 1);
+        return getWeatherCompleteData(cityName, LocalDate.now(), 1);
     }
 
 
     public WeatherData findNewestRecordByCityAndDate(String cityName, LocalDate localDate) {
-        return getWeatherComepleteData(cityName, localDate, 2);
+        return getWeatherCompleteData(cityName, localDate, 2);
     }
 
     public List<WeatherData> findByDate(LocalDate localDate) {
@@ -179,7 +179,7 @@ public class WeatherDAO {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
             transaction = session.beginTransaction();
-            WeatherData weatherData = session.createQuery("FROM WeatherData WHERE weather_data_id=:id", WeatherData.class).
+            WeatherData weatherData = session.createQuery("FROM WeatherData WHERE id=:id", WeatherData.class).
                     setParameter("id", id).
                     uniqueResultOptional().orElse(null);
             transaction.commit();
@@ -194,8 +194,7 @@ public class WeatherDAO {
         }
     }
 
-
-    private WeatherData getWeatherComepleteData(String cityName, LocalDate localDate, int option) {
+    private WeatherData getWeatherCompleteData(String cityName, LocalDate localDate, int option) {
         Transaction transaction = null;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -219,20 +218,17 @@ public class WeatherDAO {
     private WeatherData GetWeatherDataBasedOnQuery(String cityName, LocalDate localDate, Session session, int option) {
         List<WeatherData> weatherData = new ArrayList<>();
         switch (option) {
-            case 1 -> weatherData = session.createQuery("FROM WeatherData WHERE city_name=:cityName", WeatherData.class)
-                    .setParameter("cityName", cityName)
+            case 1 -> weatherData = session.createQuery("FROM WeatherData WHERE cityName=:city_name", WeatherData.class)
+                    .setParameter("city_name", cityName)
                     .getResultList();
-            case 2 -> weatherData = session.createQuery("FROM WeatherData WHERE date=:localDate AND city_name=:cityName", WeatherData.class)
-                    .setParameter("cityName", cityName)
+            case 2 -> weatherData = session.createQuery("FROM WeatherData WHERE date=:localDate AND cityName=:city_name", WeatherData.class)
+                    .setParameter("city_name", cityName)
                     .setParameter("localDate", localDate)
                     .getResultList();
-
         }
 
         if (weatherData.size() > 0) {
             return weatherData.get(weatherData.size() - 1);
         } else return null;
     }
-
-
 }

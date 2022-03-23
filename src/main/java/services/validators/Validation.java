@@ -1,9 +1,8 @@
-package dao.validators;
+package services.validators;
 
-import services.view.UserInterface;
+import view.UserInterface;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;

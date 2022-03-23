@@ -1,8 +1,8 @@
-package services.view;
+package view;
 
 import dao.LocationDAO;
 import dao.WeatherDAO;
-import dao.validators.Validation;
+import services.validators.Validation;
 import services.LocationService;
 import services.readers.ReaderFromFile;
 import services.writers.WriterAvgDataToFile;
@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
@@ -141,7 +142,7 @@ public class UserInterface {
                     databaseLocationMenu();
                 }
                 case 4 -> {
-                    System.out.println(locationDAO.findAllLocations());
+                    displayResults(locationDAO.findAllLocations());
                     databaseLocationMenu();
                 }
                 case 5 -> {
@@ -163,11 +164,11 @@ public class UserInterface {
         while (shouldContinue) {
             switch (userChoice) {
                 case 1 -> {
-                    weatherDAO.findByCity(getCityData());
+                    displayResults(weatherDAO.findByCity(getCityData()));
                     databaseWeatherDataMenu();
                 }
                 case 2 -> {
-                    weatherDAO.findByDate(LocalDate.now());
+                    displayResults(weatherDAO.findByDate(LocalDate.now()));
                     databaseWeatherDataMenu();
                 }
                 case 3 -> {
@@ -182,11 +183,18 @@ public class UserInterface {
                     weatherDAO.deleteAllRecordsByCityAndDate(getCityData(), LocalDate.now());
                     databaseWeatherDataMenu();
                 }
-                case 6 -> databaseStartMenu();
-                case 7 -> shouldContinue = false;
-                default -> System.out.println("Choose option 1-7");
+//                case 6 ->  to do - Download current weather conditions for city.
+                case 7 -> databaseStartMenu();
+                case 8 -> shouldContinue = false;
+                default -> System.out.println("Choose option 1-8");
             }
             break;
+        }
+    }
+
+    public static <T> void displayResults(List<T> listOfResults){
+        for (T result : listOfResults) {
+            System.out.println(result);
         }
     }
 

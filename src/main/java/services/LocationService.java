@@ -2,9 +2,7 @@ package services;
 
 import model.Location;
 import services.validators.Validation;
-import services.view.UserInterface;
-
-import java.util.UUID;
+import view.UserInterface;
 
 
 public class LocationService {
@@ -31,7 +29,7 @@ public class LocationService {
 
     private static String cityService() {
         String result = UserInterface.getCityData();
-        while (validation.validateIfCityNameIsEmpty(result)) {
+        while (validation.validateIfCityNameIsEmpty(result) && validation.validateIfCityExists(result)) {
             result = UserInterface.getInformationMessage();
         }
         return result;
