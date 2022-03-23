@@ -1,22 +1,37 @@
 
+
+Weather Data for city: Zawiercie
+temperature= 9.833333333333334
+pressure= 1012
+humidity= 33
+windDirection= NNW
+windSpeed= 7.431851
+
 Weather Data for city: Tarnow
-temperature= 2.88
-pressure= 1032
-humidity= 41
-windDirection= NNE
-windSpeed= 8.26
+temperature= 8.823333333333332
+pressure= 1027
+humidity= 48
+windDirection= SW
+windSpeed= 5.738889666666666
 
 Weather Data for city: Warsaw
-temperature= 5.029999999999999
-pressure= 1030
-humidity= 37
-windDirection= NNE
-windSpeed= 8.3
+temperature= 11.866666666666667
+pressure= 1022
+humidity= 27
+windDirection= N
+windSpeed= 24.959903333333333
 
 Weather Data for city: Poznan
-temperature= 5.895
-pressure= 1033
+temperature= 10.373333333333333
+pressure= 1025
+humidity= 36
+windDirection= NNE
+windSpeed= 17.347363333333334
+
+Weather Data for city: Katowice
+temperature= 8.426666666666668
+pressure= 1015
 humidity= 48
-windDirection= ESE
-windSpeed= 7.045
+windDirection= W
+windSpeed= 8.108826666666667
 

@@ -1,9 +1,9 @@
 ======================================================================
-                      CONSOLE WEATHER APPLICATION
+               CONSOLE WEATHER APPLICATION - FILE MENU
 ======================================================================
 1. Add specific locations to the file.
 2. Display currently added locations.
-3. Download weather values.
+3. Download current weather conditions for all locations in file.
 4. Return to start menu.
 5. Exit.
 ======================================================================

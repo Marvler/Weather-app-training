@@ -6,5 +6,6 @@
 3. Delete data by city.
 4. Delete data by date.
 5. Delete data by city and date.
-6. Return.
-7. Exit.
+6. Download current weather conditions for city.
+7. Return.
+8. Exit.
