@@ -1,15 +1,25 @@
 package services.validators;
 
+import dao.LocationDAO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import view.UserInterface;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.List;
 
 public class Validation {
+
+    private static final Logger logger = LogManager.getLogger(Validation.class);
 
     public boolean validateTheCoordinates(String coordinates) {
         return (coordinates.matches("^([1-8]?[0-9]|90)(N|S),\\s*(180|(1[0-7][0-9])|[1-9][0-9]|[0-9])(E|W)$"));
@@ -47,6 +57,21 @@ public class Validation {
             }
         }
         return false;
+    }
+
+    public static boolean isDateValid(String date) {
+        boolean valid;
+        try {
+            LocalDate.parse(date,
+                    DateTimeFormatter.ofPattern("uuuu-M-d")
+                            .withResolverStyle(ResolverStyle.STRICT)
+            );
+            valid = true;
+        } catch (DateTimeParseException | InputMismatchException e) {
+            logger.info("Invalid data provided");
+            valid = false;
+        }
+        return valid;
     }
 
 }

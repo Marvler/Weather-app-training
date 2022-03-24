@@ -2,6 +2,7 @@ package view;
 
 import dao.LocationDAO;
 import dao.WeatherDAO;
+import services.WeatherDataService;
 import services.validators.Validation;
 import services.LocationService;
 import services.readers.ReaderFromFile;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
@@ -28,6 +30,7 @@ public class UserInterface {
     static LocationService locServ = new LocationService();
     static LocationDAO locationDAO = new LocationDAO();
     static WeatherDAO weatherDAO = new WeatherDAO();
+    static WeatherDataService weatherDataService = new WeatherDataService();
 
     private static void readMenuFile(String menuPath) throws IOException {
         try (Stream<String> stream = Files.lines(Paths.get(menuPath))) {
@@ -157,7 +160,7 @@ public class UserInterface {
         }
     }
 
-    public static void databaseWeatherDataMenuSwitch() throws IOException {
+    public static void databaseWeatherDataMenuSwitch() throws IOException, DateTimeParseException {
         int userChoice = scanner.nextInt();
         boolean shouldContinue = true;
 
@@ -168,7 +171,7 @@ public class UserInterface {
                     databaseWeatherDataMenu();
                 }
                 case 2 -> {
-                    displayResults(weatherDAO.findByDate(LocalDate.now()));
+                    displayResults(weatherDAO.findByDate(weatherDataService.getWeatherData().getDate()));
                     databaseWeatherDataMenu();
                 }
                 case 3 -> {
@@ -224,6 +227,11 @@ public class UserInterface {
 
     public static String getCountryData() {
         System.out.println("Enter country");
+        return UserInterface.getMessage();
+    }
+
+    public static String getDateInformation() {
+        System.out.println("Enter date [yyyy-mm-dd]");
         return UserInterface.getMessage();
     }
 
