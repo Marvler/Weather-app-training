@@ -60,6 +60,10 @@ public class WeatherData {
         this.date = localDate;
     }
 
+    public WeatherData(LocalDate date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
         return "Weather Data for city: " + cityName + "\n" +
