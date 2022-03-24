@@ -179,11 +179,11 @@ public class UserInterface {
                     databaseWeatherDataMenu();
                 }
                 case 4 -> {
-                    weatherDAO.deleteAllRecordsByDate(LocalDate.now());
+                    weatherDAO.deleteAllRecordsByDate(weatherDataService.getWeatherData().getDate());
                     databaseWeatherDataMenu();
                 }
                 case 5 -> {
-                    weatherDAO.deleteAllRecordsByCityAndDate(getCityData(), LocalDate.now());
+                    weatherDAO.deleteAllRecordsByCityAndDate(getCityData(), weatherDataService.getWeatherData().getDate());
                     databaseWeatherDataMenu();
                 }
 //                case 6 ->  to do - Download current weather conditions for city.
