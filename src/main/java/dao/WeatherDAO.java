@@ -65,14 +65,14 @@ public class WeatherDAO {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             switch (option) {
-                case 1 -> session.createSQLQuery("DELETE FROM WeatherData WHERE cityName=:city")
-                        .setParameter("city", cityName)
+                case 1 -> session.createSQLQuery("DELETE FROM weather_data WHERE city_name=:cityName")
+                        .setParameter("cityName", cityName)
                         .executeUpdate();
-                case 2 -> session.createSQLQuery("DELETE FROM WeatherData WHERE cityName=:city AND date=:localDate")
-                        .setParameter("city", cityName)
+                case 2 -> session.createSQLQuery("DELETE FROM weather_data WHERE city_name=:cityName AND date=:localDate")
+                        .setParameter("cityName", cityName)
                         .setParameter("localDate", localDate)
                         .executeUpdate();
-                case 3 -> session.createSQLQuery("DELETE FROM WeatherData WHERE date=:localDate")
+                case 3 -> session.createSQLQuery("DELETE FROM weather_data WHERE date=:localDate")
                         .setParameter("localDate", localDate)
                         .executeUpdate();
             }
@@ -117,7 +117,7 @@ public class WeatherDAO {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            List<WeatherData> weatherData = getWeatherDataListBasedOnQuery("",localDate, session, 1);
+            List<WeatherData> weatherData = getWeatherDataListBasedOnQuery("", localDate, session, 1);
             transaction.commit();
 
             return weatherData;
@@ -138,7 +138,7 @@ public class WeatherDAO {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            List<WeatherData> weatherData = getWeatherDataListBasedOnQuery(cityName,LocalDate.now(), session, 2);
+            List<WeatherData> weatherData = getWeatherDataListBasedOnQuery(cityName, LocalDate.now(), session, 2);
             transaction.commit();
 
             return weatherData;
@@ -156,11 +156,11 @@ public class WeatherDAO {
 
     private List<WeatherData> getWeatherDataListBasedOnQuery(String cityName, LocalDate localDate, Session session, int option) {
         List<WeatherData> weatherData;
-        switch (option){
+        switch (option) {
             case 1 -> {
                 weatherData = session.createQuery("FROM WeatherData WHERE date=:localDate", WeatherData.class)
-                    .setParameter("localDate", localDate)
-                    .getResultList();
+                        .setParameter("localDate", localDate)
+                        .getResultList();
                 return weatherData;
             }
             case 2 -> {
@@ -218,11 +218,11 @@ public class WeatherDAO {
     private WeatherData GetWeatherDataBasedOnQuery(String cityName, LocalDate localDate, Session session, int option) {
         List<WeatherData> weatherData = new ArrayList<>();
         switch (option) {
-            case 1 -> weatherData = session.createQuery("FROM WeatherData WHERE cityName=:city_name", WeatherData.class)
-                    .setParameter("city_name", cityName)
+            case 1 -> weatherData = session.createQuery("FROM WeatherData WHERE city_name=:cityName", WeatherData.class)
+                    .setParameter("cityName", cityName)
                     .getResultList();
-            case 2 -> weatherData = session.createQuery("FROM WeatherData WHERE date=:localDate AND cityName=:city_name", WeatherData.class)
-                    .setParameter("city_name", cityName)
+            case 2 -> weatherData = session.createQuery("FROM WeatherData WHERE date=:localDate AND cityName=:cityName", WeatherData.class)
+                    .setParameter("cityName", cityName)
                     .setParameter("localDate", localDate)
                     .getResultList();
         }
