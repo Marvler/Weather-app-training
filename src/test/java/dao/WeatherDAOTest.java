@@ -46,8 +46,11 @@ class WeatherDAOTest {
 
     @Test
     public void shouldFindRecordByID() {
-        WeatherData weatherDataFromDB = weatherDAO.findByID(UUID.fromString("b87b5f81-b86a-4e20-8318-5f4c82c4031e"));
+        WeatherData weatherData = new WeatherData("Gdańsk", 123L, 1025L, 54L, "SE", 15.5);
+        weatherDAO.save(weatherData);
+        WeatherData weatherDataFromDB = weatherDAO.findByID(weatherData.getId());
         Assertions.assertNotNull(weatherDataFromDB);
+        weatherDAO.deleteByID(weatherData.getId());
     }
 
     @Test
