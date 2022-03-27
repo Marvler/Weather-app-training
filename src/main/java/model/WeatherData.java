@@ -1,5 +1,6 @@
 package model;
 
+import dao.LocationDAO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
@@ -47,6 +48,7 @@ public class WeatherData {
         this.windDirection = windDirection;
         this.windSpeed = windSpeed;
         this.date = LocalDate.now();
+        this.location = new LocationDAO().findByCity(cityName);
     }
 
     public WeatherData(String cityName, double temperature, long pressure, long humidity, String windDirection, double windSpeed, LocalDate localDate) {
@@ -58,6 +60,8 @@ public class WeatherData {
         this.windDirection = windDirection;
         this.windSpeed = windSpeed;
         this.date = localDate;
+        this.location = new LocationDAO().findByCity(cityName);
+
     }
 
     public WeatherData(LocalDate date) {

@@ -26,7 +26,7 @@ public class WriterToFile {
         }
     }
 
-    public void writeLocationToFile(WeatherData weatherData) {
+    public void writeWeatherDataToFile(WeatherData weatherData) {
         Path path = Paths.get(LOCATION_FILE);
         try {
             Files.write(path, weatherData.toString().getBytes(), StandardOpenOption.APPEND);
