@@ -56,9 +56,9 @@ class WeatherDAOTest {
     @Test
     public void shouldFindListOfRecordsByDate(){
         for (int i = 0; i < 3; i++) {
-            weatherDAO.save(new WeatherData("XYZ", 123L, 1025L, 54L, "SE", 15.5, LocalDate.now()));
+            weatherDAO.save(new WeatherData("XYZ", 123L, 1025L, 54L, "SE", 15.5, LocalDate.now().plusDays(100)));
         }
-        List <WeatherData>weatherData = weatherDAO.findByDate(LocalDate.now());
+        List <WeatherData>weatherData = weatherDAO.findByDate(LocalDate.now().plusDays(100));
         Assertions.assertEquals(weatherData.size(),3);
         weatherDAO.deleteAllRecordsByCity("XYZ");
     }
@@ -105,10 +105,10 @@ class WeatherDAOTest {
     @Test
     public void shouldDeleteAllRecordsByDate(){
         for (int i = 0; i < 3; i++) {
-            weatherDAO.save(new WeatherData("XYZ", 123L, 1025L, 54L, "SE", 15.5, LocalDate.now().minusDays(10)));
+            weatherDAO.save(new WeatherData("XYZ", 123L, 1025L, 54L, "SE", 15.5, LocalDate.now().plusDays(100)));
         }
-        weatherDAO.deleteAllRecordsByDate(LocalDate.now().minusDays(10));
-        Assertions.assertEquals(weatherDAO.findByDate(LocalDate.now().minusDays(10)).size(),0);
+        weatherDAO.deleteAllRecordsByDate(LocalDate.now().plusDays(100));
+        Assertions.assertEquals(weatherDAO.findByDate(LocalDate.now().plusDays(100)).size(),0);
     }
 
 }

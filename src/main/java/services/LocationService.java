@@ -27,9 +27,9 @@ public class LocationService {
         return result;
     }
 
-    private static String cityService() {
+    public static String cityService() {
         String result = UserInterface.getCityData();
-        while (validation.validateIfCityNameIsEmpty(result) && validation.validateIfCityExists(result)) {
+        while (!validation.validateIfCityNameIsEmpty(result) && !validation.validateIfCityExists(result)) {
             result = UserInterface.getInformationMessage();
         }
         return result;

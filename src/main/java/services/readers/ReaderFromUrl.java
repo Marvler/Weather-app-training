@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
+
 public class ReaderFromUrl {
 
 
@@ -27,28 +28,28 @@ public class ReaderFromUrl {
     }
 
     public static WeatherData getCurrentDataFromWeatherBit(String cityName) throws IOException {
-        JsonObject rootobj = getJsonObject(URLGenerator(cityName, 3));
+        JsonObject jsonObject = getJsonObject(URLGenerator(cityName, 3));
 
-        double temp = rootobj.get("data").getAsJsonArray().get(0).getAsJsonObject().get("temp").getAsDouble();
-        long humidity = rootobj.get("data").getAsJsonArray().get(0).getAsJsonObject().get("rh").getAsLong();
-        long pressure = rootobj.get("data").getAsJsonArray().get(0).getAsJsonObject().get("pres").getAsLong();
-        String windDirection = rootobj.get("data").getAsJsonArray().get(0).getAsJsonObject().get("wind_cdir").getAsString();
-        double windSpeed = rootobj.get("data").getAsJsonArray().get(0).getAsJsonObject().get("wind_spd").getAsDouble();
+        double temp = jsonObject.get("data").getAsJsonArray().get(0).getAsJsonObject().get("temp").getAsDouble();
+        long humidity = jsonObject.get("data").getAsJsonArray().get(0).getAsJsonObject().get("rh").getAsLong();
+        long pressure = jsonObject.get("data").getAsJsonArray().get(0).getAsJsonObject().get("pres").getAsLong();
+        String windDirection = jsonObject.get("data").getAsJsonArray().get(0).getAsJsonObject().get("wind_cdir").getAsString();
+        double windSpeed = jsonObject.get("data").getAsJsonArray().get(0).getAsJsonObject().get("wind_spd").getAsDouble();
 
         return new WeatherData(cityName, temp, pressure, humidity, windDirection, windSpeed);
     }
 
-    private static WeatherData getWeatherData(String cityName, JsonObject rootobj, String main, String main2, String temp,
+    private static WeatherData getWeatherData(String cityName, JsonObject jsonObject, String main, String main2, String temp,
                                               String wDirection, String wSpeed) {
-        double temperature = rootobj.get(main).getAsJsonObject().get(temp).getAsDouble();
-        long pressure = rootobj.get(main).getAsJsonObject().get("pressure").getAsLong();
-        long humidity = rootobj.get(main).getAsJsonObject().get("humidity").getAsLong();
-        double windSpeed = rootobj.get(main2).getAsJsonObject().get(wSpeed).getAsDouble();
+        double temperature = jsonObject.get(main).getAsJsonObject().get(temp).getAsDouble();
+        long pressure = jsonObject.get(main).getAsJsonObject().get("pressure").getAsLong();
+        long humidity = jsonObject.get(main).getAsJsonObject().get("humidity").getAsLong();
+        double windSpeed = jsonObject.get(main2).getAsJsonObject().get(wSpeed).getAsDouble();
         String windDirection;
         if (wDirection.equals("deg")) {
-            windDirection = WindConverter.convertWindDegToDirection(rootobj.get(main2).getAsJsonObject().get(wDirection).getAsLong());
+            windDirection = WindConverter.convertWindDegToDirection(jsonObject.get(main2).getAsJsonObject().get(wDirection).getAsLong());
         } else {
-            windDirection = rootobj.get(main2).getAsJsonObject().get(wDirection).getAsString();
+            windDirection = jsonObject.get(main2).getAsJsonObject().get(wDirection).getAsString();
         }
 
         return new WeatherData(cityName, temperature, pressure, humidity, windDirection, windSpeed);
