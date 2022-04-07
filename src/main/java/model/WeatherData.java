@@ -3,11 +3,12 @@ package model;
 import dao.LocationDAO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cascade;
-//import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.UUID;
 
 @Data
@@ -78,13 +79,13 @@ public class WeatherData {
                 "windSpeed= " +  windSpeed + "\n\n";
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-//        WeatherData that = (WeatherData) o;
-//        return id != null && Objects.equals(id, that.id);
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        WeatherData that = (WeatherData) o;
+        return id != null && Objects.equals(id, that.id);
+    }
 
     @Override
     public int hashCode() {
