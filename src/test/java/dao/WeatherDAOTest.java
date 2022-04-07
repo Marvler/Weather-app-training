@@ -7,13 +7,12 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 @Log4j2
 class WeatherDAOTest {
 
     WeatherData weatherData = new WeatherData("XYZ", 123L, 1025L, 54L, "SE", 15.5);
-    private WeatherDAO weatherDAO;
+    private final WeatherDAO weatherDAO;
 
     public WeatherDAOTest() {
         this.weatherDAO = new WeatherDAO();
