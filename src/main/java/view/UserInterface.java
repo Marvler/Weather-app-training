@@ -2,11 +2,12 @@ package view;
 
 import dao.LocationDAO;
 import dao.WeatherDAO;
+import model.WeatherData;
 import services.WeatherDataService;
 import services.validators.Validation;
 import services.LocationService;
 import services.readers.ReaderFromFile;
-import services.writers.WriterAvgDataToFile;
+import services.writers.WriterAvgData;
 import services.writers.WriterToFile;
 
 import java.io.IOException;
@@ -68,17 +69,17 @@ public class UserInterface {
 
 
     public static void startMenuSwitch() throws IOException {
-        int userChoice = scanner.nextInt();
-        boolean shouldContinue = true;
-
-        while (shouldContinue) {
+        while (true) {
+            int userChoice = scanner.nextInt();
             switch (userChoice) {
                 case 1 -> filesMenu();
                 case 2 -> databaseStartMenu();
-                case 3 -> shouldContinue = false;
+                case 3 -> {
+                    System.out.println("Have a good day!");
+                    return;
+                }
                 default -> System.out.println("Choose option 1-3");
             }
-            break;
         }
     }
 
@@ -97,12 +98,14 @@ public class UserInterface {
                     startMenu();
                 }
                 case 3 -> {
-                    WriterAvgDataToFile writerAvgDataToFile = new WriterAvgDataToFile();
+                    WriterAvgData writerAvgDataToFile = new WriterAvgData();
                     writerAvgDataToFile.writeAverageDataToFile();
                     ReaderFromFile.readFromFile("main", "weather_data.csv");
                 }
 
-                case 4 -> startMenu();
+                case 4 -> {
+                    return;
+                }
                 case 5 -> shouldContinue = false;
                 default -> System.out.println("Choose option 1-4");
             }
@@ -149,7 +152,7 @@ public class UserInterface {
                     databaseLocationMenu();
                 }
                 case 5 -> {
-                    System.out.println(locationDAO.findByCity(getCityData()));
+                    locationDAO.findByCity(getCityData());
                     databaseLocationMenu();
                 }
                 case 6 -> databaseStartMenu();
@@ -186,7 +189,10 @@ public class UserInterface {
                     weatherDAO.deleteAllRecordsByCityAndDate(getCityData(), LocalDate.now());
                     databaseWeatherDataMenu();
                 }
-//                case 6 ->  to do - Download current weather conditions for city.
+                case 6 -> {
+                    weatherDAO.save(new WriterAvgData().getAverageWeatherConditionsForCity(LocationService.cityService()));
+                    databaseWeatherDataMenu();
+                }
                 case 7 -> databaseStartMenu();
                 case 8 -> shouldContinue = false;
                 default -> System.out.println("Choose option 1-8");
@@ -195,7 +201,7 @@ public class UserInterface {
         }
     }
 
-    public static <T> void displayResults(List<T> listOfResults){
+    public static <T> void displayResults(List<T> listOfResults) {
         for (T result : listOfResults) {
             System.out.println(result);
         }
@@ -234,5 +240,6 @@ public class UserInterface {
         System.out.println("Enter date [yyyy-mm-dd]");
         return UserInterface.getMessage();
     }
+
 
 }
