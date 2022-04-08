@@ -2,7 +2,6 @@ package view;
 
 import dao.LocationDAO;
 import dao.WeatherDAO;
-import model.WeatherData;
 import services.WeatherDataService;
 import services.validators.Validation;
 import services.LocationService;
@@ -33,7 +32,7 @@ public class UserInterface {
     static WeatherDAO weatherDAO = new WeatherDAO();
     static WeatherDataService weatherDataService = new WeatherDataService();
 
-    private static void readMenuFile(String menuPath) throws IOException {
+    private static void readMenuFile(String menuPath){
         try (Stream<String> stream = Files.lines(Paths.get(menuPath))) {
             stream.forEach(System.out::println);
         } catch (IOException e) {
@@ -41,163 +40,89 @@ public class UserInterface {
         }
     }
 
-
     public static void startMenu() throws IOException {
-        readMenuFile(START_MENU_PATH);
-        startMenuSwitch();
-    }
-
-    public static void filesMenu() throws IOException {
-        readMenuFile(FILES_MENU_PATH);
-        filesMenuSwitch();
-    }
-
-    public static void databaseStartMenu() throws IOException {
-        readMenuFile(DB_START_MENU_PATH);
-        databaseStartMenuSwitch();
-    }
-
-    public static void databaseLocationMenu() throws IOException {
-        readMenuFile(DB_LOC_MENU_PATH);
-        databaseLocationMenuSwitch();
-    }
-
-    public static void databaseWeatherDataMenu() throws IOException {
-        readMenuFile(DB_WD_MENU_PATH);
-        databaseWeatherDataMenuSwitch();
-    }
-
-
-    public static void startMenuSwitch() throws IOException {
         while (true) {
-            int userChoice = scanner.nextInt();
+            readMenuFile(START_MENU_PATH);
+            int userChoice = Integer.parseInt(Validation.isUserChoiceValid(bufferedReader.readLine()));
             switch (userChoice) {
                 case 1 -> filesMenu();
                 case 2 -> databaseStartMenu();
                 case 3 -> {
                     System.out.println("Have a good day!");
-                    return;
+                    System.exit(0);
                 }
                 default -> System.out.println("Choose option 1-3");
             }
         }
     }
 
-    public static void filesMenuSwitch() throws IOException {
-        int userChoice = scanner.nextInt();
-        boolean shouldContinue = true;
-
-        while (shouldContinue) {
+    public static void filesMenu() throws IOException {
+        while (true) {
+            readMenuFile(FILES_MENU_PATH);
+            int userChoice = Integer.parseInt(Validation.isUserChoiceValid(bufferedReader.readLine()));
             switch (userChoice) {
-                case 1 -> {
-                    writer.writeLocationToFile(locServ.getLocation());
-                    startMenu();
-                }
-                case 2 -> {
-                    ReaderFromFile.readFromFile("main", "locations_data.csv");
-                    startMenu();
-                }
+                case 1 -> writer.writeLocationToFile(locServ.getLocation());
+                case 2 -> ReaderFromFile.readFromFile("main", "locations_data.csv");
                 case 3 -> {
                     WriterAvgData writerAvgDataToFile = new WriterAvgData();
                     writerAvgDataToFile.writeAverageDataToFile();
                     ReaderFromFile.readFromFile("main", "weather_data.csv");
                 }
-
-                case 4 -> {
-                    return;
-                }
-                case 5 -> shouldContinue = false;
-                default -> System.out.println("Choose option 1-4");
+                case 4 -> {return;}
+                case 5 -> System.exit(0);
+                default -> System.out.println("Choose option 1-5");
             }
-            break;
         }
     }
 
-    public static void databaseStartMenuSwitch() throws IOException {
-        int userChoice = scanner.nextInt();
-        boolean shouldContinue = true;
-
-        while (shouldContinue) {
+    public static void databaseStartMenu() throws IOException {
+        while (true) {
+            readMenuFile(DB_START_MENU_PATH);
+            int userChoice = Integer.parseInt(Validation.isUserChoiceValid(bufferedReader.readLine()));
             switch (userChoice) {
                 case 1 -> databaseLocationMenu();
                 case 2 -> databaseWeatherDataMenu();
-                case 3 -> startMenu();
-                case 4 -> shouldContinue = false;
+                case 3 -> {
+                    return;
+                }
+                case 4 -> System.exit(0);
                 default -> System.out.println("Choose option 1-4");
             }
-            break;
         }
     }
 
-    public static void databaseLocationMenuSwitch() throws IOException {
-        int userChoice = scanner.nextInt();
-        boolean shouldContinue = true;
-
-        while (shouldContinue) {
+    public static void databaseLocationMenu() throws IOException {
+        while (true) {
+            readMenuFile(DB_LOC_MENU_PATH);
+            int userChoice = Integer.parseInt(Validation.isUserChoiceValid(bufferedReader.readLine()));
             switch (userChoice) {
-                case 1 -> {
-                    locationDAO.save(locServ.getLocation());
-                    databaseLocationMenu();
-                }
-                case 2 -> {
-                    locationDAO.deleteByCity(getCityData());
-                    databaseLocationMenu();
-                }
-                case 3 -> {
-                    locationDAO.updateByCity(getCityData());
-                    databaseLocationMenu();
-                }
-                case 4 -> {
-                    displayResults(locationDAO.findAllLocations());
-                    databaseLocationMenu();
-                }
-                case 5 -> {
-                    locationDAO.findByCity(getCityData());
-                    databaseLocationMenu();
-                }
-                case 6 -> databaseStartMenu();
-                case 7 -> shouldContinue = false;
+                case 1 -> locationDAO.save(locServ.getLocation());
+                case 2 -> locationDAO.deleteByCity(getCityData());
+                case 3 -> locationDAO.updateByCity(getCityData());
+                case 4 -> displayResults(locationDAO.findAllLocations());
+                case 5 -> locationDAO.findByCity(getCityData());
+                case 6 -> {return;}
+                case 7 -> System.exit(0);
                 default -> System.out.println("Choose option 1-7");
             }
-            break;
         }
     }
 
-    public static void databaseWeatherDataMenuSwitch() throws IOException, DateTimeParseException {
-        int userChoice = scanner.nextInt();
-        boolean shouldContinue = true;
-
-        while (shouldContinue) {
+    public static void databaseWeatherDataMenu() throws IOException, DateTimeParseException {
+        while (true) {
+            readMenuFile(DB_WD_MENU_PATH);
+            int userChoice = Integer.parseInt(Validation.isUserChoiceValid(bufferedReader.readLine()));
             switch (userChoice) {
-                case 1 -> {
-                    displayResults(weatherDAO.findByCity(getCityData()));
-                    databaseWeatherDataMenu();
-                }
-                case 2 -> {
-                    displayResults(weatherDAO.findByDate(weatherDataService.getWeatherData().getDate()));
-                    databaseWeatherDataMenu();
-                }
-                case 3 -> {
-                    weatherDAO.deleteAllRecordsByCity(getCityData());
-                    databaseWeatherDataMenu();
-                }
-                case 4 -> {
-                    weatherDAO.deleteAllRecordsByDate(LocalDate.now());
-                    databaseWeatherDataMenu();
-                }
-                case 5 -> {
-                    weatherDAO.deleteAllRecordsByCityAndDate(getCityData(), LocalDate.now());
-                    databaseWeatherDataMenu();
-                }
-                case 6 -> {
-                    weatherDAO.save(new WriterAvgData().getAverageWeatherConditionsForCity(LocationService.cityService()));
-                    databaseWeatherDataMenu();
-                }
-                case 7 -> databaseStartMenu();
-                case 8 -> shouldContinue = false;
+                case 1 -> displayResults(weatherDAO.findByCity(getCityData()));
+                case 2 -> displayResults(weatherDAO.findByDate(weatherDataService.getWeatherData().getDate()));
+                case 3 -> weatherDAO.deleteAllRecordsByCity(getCityData());
+                case 4 -> weatherDAO.deleteAllRecordsByDate(LocalDate.now());
+                case 5 -> weatherDAO.deleteAllRecordsByCityAndDate(getCityData(), LocalDate.now());
+                case 6 -> weatherDAO.save(new WriterAvgData().getAverageWeatherConditionsForCity(LocationService.cityService()));
+                case 7 -> {return;}
+                case 8 -> System.exit(0);
                 default -> System.out.println("Choose option 1-8");
             }
-            break;
         }
     }
 
@@ -207,9 +132,24 @@ public class UserInterface {
         }
     }
 
-    public static String getInformationMessage() {
+    public static String getWrongInputMessage() {
         System.out.println("Invalid data provided! Please type again!");
-        return Validation.returnIfNotNullOrEmpty(scanner.next());
+        try {
+            return Validation.returnIfNotNullOrEmpty(bufferedReader.readLine());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getWrongMessageForIntegerInput() {
+        System.out.println("Invalid data provided! Please type again!");
+        try {
+            return Validation.isUserChoiceValid(bufferedReader.readLine());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static String getMessage() {
@@ -240,6 +180,4 @@ public class UserInterface {
         System.out.println("Enter date [yyyy-mm-dd]");
         return UserInterface.getMessage();
     }
-
-
 }
