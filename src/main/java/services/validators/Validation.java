@@ -1,6 +1,5 @@
 package services.validators;
 
-import dao.LocationDAO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import view.UserInterface;
@@ -35,7 +34,7 @@ public class Validation {
 
     public static String returnIfNotNullOrEmpty(String input) {
         if (input.isEmpty() || input.isBlank()) {
-            input = UserInterface.getInformationMessage();
+            input = UserInterface.getWrongInputMessage();
         }
         return input;
     }
