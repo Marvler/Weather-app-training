@@ -9,7 +9,9 @@ import services.readers.ReaderFromFile;
 import services.writers.WriterAvgData;
 import services.writers.WriterToFile;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -25,6 +27,7 @@ public class UserInterface {
     static final String DB_START_MENU_PATH = "src/main/resources/textMenuSchemas/databaseStartMenu.txt";
     static final String DB_LOC_MENU_PATH = "src/main/resources/textMenuSchemas/databaseLocationMenu.txt";
     static final String DB_WD_MENU_PATH = "src/main/resources/textMenuSchemas/databaseWeatherDataMenu.txt";
+    static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
     static Scanner scanner = new Scanner(System.in);
     static WriterToFile writer = new WriterToFile("main", "locations_data.csv");
     static LocationService locServ = new LocationService();
@@ -82,9 +85,7 @@ public class UserInterface {
             switch (userChoice) {
                 case 1 -> databaseLocationMenu();
                 case 2 -> databaseWeatherDataMenu();
-                case 3 -> {
-                    return;
-                }
+                case 3 -> {return;}
                 case 4 -> System.exit(0);
                 default -> System.out.println("Choose option 1-4");
             }
@@ -100,7 +101,7 @@ public class UserInterface {
                 case 2 -> locationDAO.deleteByCity(getCityData());
                 case 3 -> locationDAO.updateByCity(getCityData());
                 case 4 -> displayResults(locationDAO.findAllLocations());
-                case 5 -> locationDAO.findByCity(getCityData());
+                case 5 -> displaySingleResult(locationDAO.findByCity(getCityData()));
                 case 6 -> {return;}
                 case 7 -> System.exit(0);
                 default -> System.out.println("Choose option 1-7");
@@ -132,6 +133,10 @@ public class UserInterface {
         }
     }
 
+    public static <T> void displaySingleResult(T result) {
+        System.out.println(result);
+    }
+
     public static String getWrongInputMessage() {
         System.out.println("Invalid data provided! Please type again!");
         try {
@@ -158,7 +163,12 @@ public class UserInterface {
 
     public static String getCoordinatesInformation() {
         System.out.println("Enter coordinates in format: [longitude, latitude]");
-        return UserInterface.getMessage();
+        try {
+            return Validation.returnIfNotNullOrEmpty(bufferedReader.readLine());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static String getCityData() {
